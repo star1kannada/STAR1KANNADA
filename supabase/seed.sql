@@ -27,9 +27,12 @@ insert into public.contact_channels(slug,label_en,label_kn,phone_e164,url,sort_o
 ('magazine','STAR1 Kannada Magazine','ಸ್ಟಾರ್1 ಕನ್ನಡ ನಿಯತಕಾಲಿಕೆ','+919980778836','https://wa.me/919980778836',2,true)
 on conflict(slug) do update set label_en=excluded.label_en,label_kn=excluded.label_kn,phone_e164=excluded.phone_e164,url=excluded.url,is_published=excluded.is_published;
 insert into public.social_links(platform,label_en,label_kn,url,sort_order,is_published) values
-('youtube','YouTube','ಯೂಟ್ಯೂಬ್','https://youtube.com/shorts/NXQU7bpt050?si=DKAuuphstXjsBMTO',1,true),
+('youtube','YouTube','ಯೂಟ್ಯೂಬ್','https://www.youtube.com/@STAR1KANNADA-l1q',1,true),
 ('instagram','Instagram','ಇನ್‌ಸ್ಟಾಗ್ರಾಂ','https://www.instagram.com/reel/De_VbvxTUs8/?exln=MWZ1eG5vY2J2OXQ4eg==',2,true),
-('whatsapp','WhatsApp Channel','ವಾಟ್ಸಾಪ್ ಚಾನೆಲ್','https://whatsapp.com/channel/0029VbBiGKq9mrGVUdnqK93N',3,true)
+('whatsapp','WhatsApp Channel','ವಾಟ್ಸಾಪ್ ಚಾನೆಲ್','https://whatsapp.com/channel/0029VbBiGKq9mrGVUdnqK93N',3,true),
+('facebook','Facebook','ಫೇಸ್‌ಬುಕ್','https://www.facebook.com/share/16gBqoqnxo/',4,true),
+('treefe','Treefe','ಟ್ರೀಫೀ','https://www.treefe.com/share-profile?referral_code=E00610&id=PkYxZPpw8RRXsWoa8wfu0Q%3D%3D%3A0Vl1v3%2FyZfXHkAeP9TgprHj1em1fOYr5dpAlCTxwXt4%3D',5,true),
+('x','X (Twitter)','ಎಕ್ಸ್ (ಟ್ವಿಟ್ಟರ್)','https://x.com/Starkannada2025',6,true)
 on conflict(platform) do update set label_en=excluded.label_en,label_kn=excluded.label_kn,url=excluded.url,is_published=excluded.is_published;
 
 commit;
