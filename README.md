@@ -18,3 +18,8 @@ New assets (built-in image generation): `public/newsroom.jpg`, `public/reporting
 Upcoming-events section image: `public/upcoming-events.jpg`, generated with the built-in image tool. Prompt: Premium cinematic 16:9 editorial photo of an illustrative evening Kannada community cultural celebration at an open-air Bengaluru venue, traditional folk performers on the right, seated audience silhouettes, gold spotlights, burgundy curtains and marigold decorations; calm dark left third for copy, no text, logos or watermarks.
 
 All six upcoming-event cards now use photographic imagery. Five new built-in-generated illustrative photos are saved as `public/event-{talent,talk,music,food,ideas}.jpg`; the first card keeps its palace image. Prompts: Kannada young singers auditioning on a burgundy/gold stage; woman host and two community speakers in a Karnataka auditorium; Karnataka folk musicians with traditional percussion and string instruments; Karnataka food festival with a cook serving regional dishes on banana leaves; young adults presenting an innovation project in Hubballi. Shared direction: realistic 3:2 editorial event photography, candid expressions, generous landscape framing, staged illustration, no words/logos/watermarks.
+
+
+## Content admin
+
+Open `/admin/login/` to sign in, then use the separate events, banners, gallery and partners pages to manage upcoming events, banner slides, gallery photos and partners. Setup: `supabase/ADMIN-README.md`; one-file SQL: `supabase/admin-all-in-one.sql`; public configuration: `.env.example`. Once configured, the public homepage reads published content directly from Supabase. No service-role key is used in the browser.

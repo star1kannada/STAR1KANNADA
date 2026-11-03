@@ -1,0 +1,94 @@
+-- Focused STAR1 CMS: ONLY upcoming events, banners, gallery and partners.
+-- Run in Supabase SQL Editor. Compatible with the earlier STAR1 schema.
+begin;
+create schema if not exists private;
+revoke all on schema private from public;
+grant usage on schema private to authenticated;
+create or replace function private.is_admin() returns boolean language sql stable security invoker set search_path='' as $$
+ select coalesce((select auth.jwt())->'app_metadata'->>'role','')='admin'
+$$;
+revoke all on function private.is_admin() from public;
+grant execute on function private.is_admin() to authenticated;
+
+create table if not exists public.events (
+ id uuid primary key default gen_random_uuid(), slug text not null unique,
+ title_en text not null, title_kn text not null,
+ description_en text not null default '', description_kn text not null default '',
+ category_label_en text not null default '', category_label_kn text not null default '',
+ starts_at timestamptz, ends_at timestamptz, venue_en text not null default '', venue_kn text not null default '',
+ image_url text, image_path text, sort_order integer not null default 0,
+ status text not null default 'upcoming' check(status in ('upcoming','ongoing','completed','cancelled')),
+ is_sample boolean not null default false, is_published boolean not null default false,
+ created_at timestamptz not null default now(),
+ check(ends_at is null or starts_at is null or ends_at>=starts_at)
+);
+alter table public.events add column if not exists category_label_en text not null default '';
+alter table public.events add column if not exists category_label_kn text not null default '';
+alter table public.events add column if not exists image_path text;
+alter table public.events add column if not exists sort_order integer not null default 0;
+
+create table if not exists public.banners (
+ id uuid primary key default gen_random_uuid(), slug text not null unique,
+ label_en text not null, label_kn text not null,
+ tag_en text not null default '', tag_kn text not null default '',
+ line1_en text not null, line1_kn text not null, line2_en text not null, line2_kn text not null,
+ body_en text not null default '', body_kn text not null default '',
+ cta_en text not null default '', cta_kn text not null default '', link_url text not null default '#events',
+ alt_en text not null default '', alt_kn text not null default '', image_url text not null, image_path text,
+ sort_order integer not null default 0, is_published boolean not null default false,
+ created_at timestamptz not null default now()
+);
+create table if not exists public.gallery (
+ id uuid primary key default gen_random_uuid(), title_en text not null, title_kn text not null,
+ alt_en text not null default '', alt_kn text not null default '', image_url text not null, image_path text,
+ sort_order integer not null default 0, is_published boolean not null default false,
+ created_at timestamptz not null default now()
+);
+create table if not exists public.partners (
+ id uuid primary key default gen_random_uuid(), slug text not null unique,
+ name_en text not null, name_kn text not null, subtitle_en text not null default '', subtitle_kn text not null default '',
+ logo_url text, logo_path text, website_url text,
+ sort_order integer not null default 0, is_sample boolean not null default false,
+ is_published boolean not null default false
+);
+alter table public.partners add column if not exists subtitle_en text not null default '';
+alter table public.partners add column if not exists subtitle_kn text not null default '';
+alter table public.partners add column if not exists logo_path text;
+alter table public.partners alter column is_sample set default false;
+
+-- Admin-only record writes are enforced here, independently of the UI.
+-- Links and image URLs are additionally checked before rendering.
+do $$ declare tbl text; begin
+ foreach tbl in array array['events','banners','gallery','partners'] loop
+  execute format('alter table public.%I enable row level security',tbl);
+  execute format('revoke all on table public.%I from anon,authenticated',tbl);
+  execute format('grant select on table public.%I to anon,authenticated',tbl);
+  execute format('grant insert,update,delete on table public.%I to authenticated',tbl);
+  execute format('grant all on table public.%I to service_role',tbl);
+  execute format('drop policy if exists published_read on public.%I',tbl);
+  execute format('create policy published_read on public.%I for select to anon,authenticated using(is_published=true)',tbl);
+  execute format('drop policy if exists admin_manage on public.%I',tbl);
+  execute format('create policy admin_manage on public.%I for all to authenticated using((select private.is_admin())) with check((select private.is_admin()))',tbl);
+  execute format('create index if not exists %I on public.%I(is_published,sort_order)',tbl||'_published_order_idx',tbl);
+ end loop;
+end $$;
+
+-- Only public website images belong in this public bucket. Draft image URLs are
+-- publicly retrievable too; do not upload confidential files or documents.
+insert into storage.buckets(id,name,public,file_size_limit,allowed_mime_types)
+values('site-media','site-media',true,5242880,array['image/jpeg','image/png','image/webp','image/avif'])
+on conflict(id) do update set public=excluded.public,file_size_limit=excluded.file_size_limit,allowed_mime_types=excluded.allowed_mime_types;
+
+drop policy if exists cms_media_read on storage.objects;
+create policy cms_media_read on storage.objects for select to anon,authenticated using(bucket_id='site-media');
+drop policy if exists cms_media_upload on storage.objects;
+create policy cms_media_upload on storage.objects for insert to authenticated with check(
+ bucket_id='site-media' and (select private.is_admin()) and (storage.foldername(name))[1] in ('events','banners','gallery','partners')
+);
+drop policy if exists cms_media_update on storage.objects;
+create policy cms_media_update on storage.objects for update to authenticated
+using(bucket_id='site-media' and (select private.is_admin()))
+with check(bucket_id='site-media' and (select private.is_admin()) and (storage.foldername(name))[1] in ('events','banners','gallery','partners'));
+drop policy if exists cms_media_delete on storage.objects;
+create policy cms_media_delete on storage.objects for delete to authenticated using(bucket_id='site-media' and (select private.is_admin()));
+commit;

@@ -1,3 +1,7 @@
+# Current content admin
+
+For the new four-area admin panel, use [ADMIN-README.md](ADMIN-README.md) and `admin-setup.sql`. The files documented below are the earlier broader schema and are not required by the new panel.
+
 # Supabase setup for STAR1 Kannada
 
 The website currently renders from local TypeScript data. These SQL files prepare a database; they do not connect the live site or replace its preview login/donation forms. No Supabase credentials were supplied, so no remote project or tables have been created.
