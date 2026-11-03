@@ -67,3 +67,6 @@ Use **the email and password you create in your Supabase project's Authenticatio
 
 ## INSERT queries
 The final block of `admin-all-in-one.sql` contains optional draft INSERT examples for all four tables. Uncomment it and replace sample values before running. The same examples are also in `admin-insert-examples.sql`. Images must be uploaded through Admin or the Storage Dashboard; SQL stores their URLs only.
+
+## Create a real admin account in one command
+Copy `.env.admin.example` to `.env.admin.local`. Set the same project URL as the website and your Supabase secret key. Set ADMIN_EMAIL and ADMIN_PASSWORD, then run `npm run admin:create`. The server-only Auth Admin API creates a confirmed user and assigns app_metadata.role=admin. Existing accounts and passwords are not overwritten. Do not share the secret key or commit the private env file. Login at http://localhost:3100/admin/login/. The account is stored in Supabase's auth.users, not in a public plaintext password table.
