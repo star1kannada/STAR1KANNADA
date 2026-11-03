@@ -43,6 +43,8 @@ async function test(legacy){
  assert.equal((await db.query("delete from storage.objects where name='events/admin.jpg' returning id")).rows.length,1);
  assert.equal((await db.query("delete from public.events where slug='admin-event' returning id")).rows.length,1);
  await db.exec('reset role');await db.exec(await read('admin-queries.sql'));
+ await db.exec(await read('admin-insert-examples.sql'));await db.exec(await read('admin-insert-examples.sql'));
+ assert.equal((await db.query("select * from public.banners where slug='example-banner' and not is_published")).rows.length,1);
  await db.close();console.log(`PASS: ${legacy?'existing STAR1 schema':'fresh project'} — repeatable migration, drafts hidden, public writes denied, spoofed role denied, admin CRUD, restricted Storage paths.`);
 }
 await test(false);await test(true);

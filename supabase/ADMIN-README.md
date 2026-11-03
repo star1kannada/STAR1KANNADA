@@ -64,3 +64,6 @@ Official references: [API keys](https://supabase.com/docs/guides/getting-started
 ## What email and password should I use?
 
 Use **the email and password you create in your Supabase project's Authentication → Users screen**. There are no preassigned or demo credentials in the deployed site. The current env values are placeholders, so real login is not enabled yet. Set the public project URL/key in `.env.local`, run the combined SQL, create the Auth account, then grant that specific account the admin role with the UPDATE at the end of the SQL file. Do not put the login password in `.env` or SQL source.
+
+## INSERT queries
+The final block of `admin-all-in-one.sql` contains optional draft INSERT examples for all four tables. Uncomment it and replace sample values before running. The same examples are also in `admin-insert-examples.sql`. Images must be uploaded through Admin or the Storage Dashboard; SQL stores their URLs only.
