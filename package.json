@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test:cms": "node tests/cms-validation.mjs && node tests/cms-policies.mjs",
-    "admin:create": "node --env-file=.env.admin.local scripts/create-admin.mjs"
+    "admin:create": "node --env-file=.env.admin.local scripts/create-admin.mjs",
+    "test:donations": "node tests/donation-policies.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",
