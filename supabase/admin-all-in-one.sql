@@ -100,15 +100,33 @@ create policy cms_media_delete on storage.objects for delete to authenticated us
 commit;
 
 
--- Optional starter banners. Only the admin can subsequently edit them.
--- Local image URLs use files already bundled with this website.
--- Rerunning never overwrites an admin edit.
+-- Optional starter leadership banner. Rerunning preserves admin edits.
 begin;
-insert into public.banners(slug,label_en,label_kn,tag_en,tag_kn,line1_en,line1_kn,line2_en,line2_kn,body_en,body_kn,cta_en,cta_kn,link_url,alt_en,alt_kn,image_url,sort_order,is_published) values('conversation','The conversation','ಮುಕ್ತ ಸಂವಾದ','MORE VOICES. WIDER PERSPECTIVES.','ಹಲವು ಧ್ವನಿಗಳು. ವಿಶಾಲ ದೃಷ್ಟಿಕೋನ.','Big questions. Open minds.','ಮುಖ್ಯ ಪ್ರಶ್ನೆ. ಮುಕ್ತ ಮನಸ್ಸು.','Real dialogue.','ಅರ್ಥಪೂರ್ಣ ಸಂವಾದ.','Make room for thoughtful conversations about the issues that connect our communities.','ನಮ್ಮ ಸಮುದಾಯಗಳನ್ನು ಬೆಸೆಯುವ ವಿಷಯಗಳ ಕುರಿತು ಅರ್ಥಪೂರ್ಣ ಸಂವಾದಕ್ಕೆ ವೇದಿಕೆ.','Discover the conversation','ಸಂವಾದಗಳನ್ನು ಅನ್ವೇಷಿಸಿ','#ongoing','AI-created moderator and guests in a television discussion studio','ಸ್ಟುಡಿಯೋ ಸಂವಾದದ ಮಾದರಿ ಚಿತ್ರ','/discussion.jpg',1,true) on conflict(slug) do nothing;
-insert into public.banners(slug,label_en,label_kn,tag_en,tag_kn,line1_en,line1_kn,line2_en,line2_kn,body_en,body_kn,cta_en,cta_kn,link_url,alt_en,alt_kn,image_url,sort_order,is_published) values('newsroom','The newsroom','ಸುದ್ದಿ ಕೇಂದ್ರ','NEWS. WITH PERSPECTIVE.','ಸುದ್ದಿ. ಸಮಗ್ರ ದೃಷ್ಟಿಯೊಂದಿಗೆ.','Your news. Your world.','ನಿಮ್ಮ ಸುದ್ದಿ. ನಿಮ್ಮ ಜಗತ್ತು.','In Kannada.','ಕನ್ನಡದಲ್ಲಿ.','A closer look at the stories shaping Karnataka, from the studio to your screen.','ಕರ್ನಾಟಕವನ್ನು ರೂಪಿಸುವ ಕಥೆಗಳ ಸಮಗ್ರ ನೋಟ, ಸ್ಟುಡಿಯೋದಿಂದ ನಿಮ್ಮ ಪರದೆಗೆ.','Explore our programmes','ಕಾರ್ಯಕ್ರಮಗಳನ್ನು ನೋಡಿ','#ongoing','AI-created Kannada news studio with a presenter','ಸುದ್ದಿ ಸ್ಟುಡಿಯೋದ ಮಾದರಿ ಚಿತ್ರ','/newsroom.jpg',2,true) on conflict(slug) do nothing;
-insert into public.banners(slug,label_en,label_kn,tag_en,tag_kn,line1_en,line1_kn,line2_en,line2_kn,body_en,body_kn,cta_en,cta_kn,link_url,alt_en,alt_kn,image_url,sort_order,is_published) values('on-the-ground','On the ground','ಸ್ಥಳದಿಂದ ವರದಿ','CLOSER TO THE STORY.','ಸುದ್ದಿಯ ಮೂಲಕ್ಕೆ ಹತ್ತಿರ.','Every street. Every story.','ಪ್ರತಿ ಬೀದಿ. ಪ್ರತಿ ಕಥೆ.','Your voice.','ನಿಮ್ಮ ಧ್ವನಿ.','People, places and local perspectives. Karnataka’s stories begin with its people.','ಜನರು, ಸ್ಥಳಗಳು ಮತ್ತು ಸ್ಥಳೀಯ ದೃಷ್ಟಿಕೋನಗಳು. ನಮ್ಮ ನಾಡಿನ ಕಥೆಗಳು ಜನರಿಂದಲೇ ಆರಂಭ.','Meet your channel','ನಿಮ್ಮ ವಾಹಿನಿಯ ಪರಿಚಯ','#about','AI-created field reporter and camera operator in Bengaluru','ಸ್ಥಳದಿಂದ ವರದಿ ಮಾಡುವ ಮಾದರಿ ಚಿತ್ರ','/reporting.jpg',3,true) on conflict(slug) do nothing;
--- Events, partners and gallery intentionally start empty. Add real content in /admin.
+insert into public.banners (
+  slug, label_en, label_kn, tag_en, tag_kn, line1_en, line1_kn, line2_en, line2_kn, body_en, body_kn, cta_en, cta_kn, link_url, alt_en, alt_kn, image_url, sort_order, is_published
+) values (
+  'star1-leadership',
+  'Our leadership',
+  'ನಮ್ಮ ನಾಯಕತ್ವ',
+  'STAR1 KANNADA · MEDIA. ARTS. COMMUNITY.',
+  'ಸ್ಟಾರ್1 ಕನ್ನಡ · ಮಾಧ್ಯಮ. ಕಲೆ. ಸಮಾಜ.',
+  'Our people. Our purpose.',
+  'ನಮ್ಮ ಜನರು. ನಮ್ಮ ಧ್ಯೇಯ.',
+  'Our Kannada.',
+  'ನಮ್ಮ ಕನ್ನಡ.',
+  'Led by Sri Raasaa Abhaya Eshwara and Smt. Hema, connecting Karnataka through news, culture and community.',
+  'ಶ್ರೀ ರಾಸಾ ಅಭಯ ಈಶ್ವರ ಮತ್ತು ಶ್ರೀಮತಿ ಹೇಮಾ ಅವರ ನಾಯಕತ್ವದಲ್ಲಿ ಸುದ್ದಿ, ಸಂಸ್ಕೃತಿ ಮತ್ತು ಸಮುದಾಯದ ಮೂಲಕ ಕರ್ನಾಟಕವನ್ನು ಬೆಸೆಯುತ್ತೇವೆ.',
+  'Meet our leadership',
+  'ನಮ್ಮ ನಾಯಕತ್ವದ ಪರಿಚಯ',
+  '#founder',
+  'Portrait composite of Sri Raasaa Abhaya Eshwara and Smt. Hema',
+  'ಶ್ರೀ ರಾಸಾ ಅಭಯ ಈಶ್ವರ ಮತ್ತು ಶ್ರೀಮತಿ ಹೇಮಾ ಅವರ ಸಂಯೋಜಿತ ಭಾವಚಿತ್ರ',
+  '/leadership-banner.png',
+  1,
+  true
+) on conflict(slug) do nothing;
 commit;
+
 
 
 -- 1. In Supabase > Authentication > Users, create your admin email/password user.

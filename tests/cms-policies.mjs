@@ -24,7 +24,7 @@ async function test(legacy){
  async function deny(sql){let denied=false;try{await db.exec(sql)}catch{denied=true}assert(denied,'Expected permission rejection: '+sql)}
  await db.exec('set role anon');
  assert.equal((await db.query('select * from public.gallery')).rows.length,1);
- assert.equal((await db.query('select * from public.banners')).rows.length,3);
+ assert.equal((await db.query('select * from public.banners')).rows.length,1);
  await deny("insert into public.gallery(title_en,title_kn,image_url) values('bad','bad','/bad.jpg')");
  await deny("insert into storage.objects(bucket_id,name) values('site-media','gallery/bad.jpg')");
  await db.exec('reset role;set role authenticated');
@@ -45,6 +45,7 @@ async function test(legacy){
  await db.exec('reset role');await db.exec(await read('admin-queries.sql'));
  await db.exec(await read('admin-insert-examples.sql'));await db.exec(await read('admin-insert-examples.sql'));
  assert.equal((await db.query("select * from public.banners where slug='example-banner' and not is_published")).rows.length,1);
+ await db.exec(await read('replace-leadership-banner.sql'));assert.equal((await db.query('select * from public.banners')).rows.length,1);
  await db.close();console.log(`PASS: ${legacy?'existing STAR1 schema':'fresh project'} — repeatable migration, drafts hidden, public writes denied, spoofed role denied, admin CRUD, restricted Storage paths.`);
 }
 await test(false);await test(true);

@@ -1,0 +1,1 @@
+Built-in image_gen tool. Identity-preserving two-person photographic composite using the supplied portraits. Wide 16:9 hero; man in blue waistcoat and woman in purple sari on the right, clean burgundy space on left for HTML text, subtle gold studio accents and Karnataka skyline. Preserve identities, age, skin tone and clothing. No text, extra people, logos or crowns.
