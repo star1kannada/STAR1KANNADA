@@ -129,3 +129,9 @@ main#home #partners .partner-logo{background:#fffaf0}
 /* Display original portrait posters completely in their preview cards. */
 .gallery-photo-card img[src^="/media/gallery/"],.event-image img[src^="/media/events/"],.listing-event-image img[src^="/media/events/"]{object-fit:contain;background:#160d11}
 .event-date-tba{position:absolute;left:8px;bottom:8px;padding:5px 8px;border-radius:4px;background:#fff4db;color:#591c1c;font-size:8px;line-height:1.5;max-width:90%}
+
+/* Homepage collections use the full screen width with a small edge inset. */
+main#home #events.section,main#home #gallery.section,main#home #partners.section{padding-inline:0}
+main#home #events .auto-rail,main#home #gallery .auto-rail,main#home #partners .auto-rail{margin-inline:16px}
+.cms-partner-image[src="/partners/rakvih-logo.png"]{width:160px;max-width:100%;height:62px;object-fit:contain;object-position:left center}
+@media(max-width:640px){main#home #events .auto-rail,main#home #gallery .auto-rail,main#home #partners .auto-rail{margin-inline:12px}}
