@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {safeLink,validImageUrl,toISTInput,fromISTInput,imageFields,IMAGE_TYPES} from '../lib/cms-types.ts';
 for(const url of ['javascript:alert(1)','data:text/html,anything','//evil.example/a','file:///tmp/a'])assert.equal(safeLink(url),'');
+assert.equal(safeLink('/events/'),'/events/');assert.equal(safeLink('/founders/#hema'),'/founders/#hema');assert.equal(safeLink('/events/',false),'');assert.equal(safeLink('/\\evil'),'');
 assert.equal(safeLink('#events'),'#events');assert.equal(safeLink('https://example.com/path'),'https://example.com/path');
 assert.equal(validImageUrl('//evil.example/image.jpg'),false);assert.equal(validImageUrl('/event-food.jpg'),true);
 assert.equal(validImageUrl('data:image/svg+xml,anything'),false);

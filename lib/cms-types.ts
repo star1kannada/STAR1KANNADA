@@ -18,6 +18,7 @@ export const IMAGE_TYPES = ['image/jpeg','image/png','image/webp','image/avif'];
 export function safeLink(value: string, allowAnchor = true): string {
   const text = value.trim();
   if (allowAnchor && /^#[a-zA-Z][\w-]*$/.test(text)) return text;
+  if (allowAnchor && /^\/(?!\/)[a-zA-Z0-9/_-]*(?:#[a-zA-Z][\w-]*)?$/.test(text)) return text;
   try { const url = new URL(text); return ['http:','https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; }
 }
 export function validImageUrl(value: string): boolean {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { DM_Sans, Fraunces, Noto_Sans_Kannada, Noto_Serif_Kannada } from 'next/font/google';
 import './globals.css';
+import './public.css';
 const serif=Fraunces({subsets:['latin'],style:['normal','italic'],variable:'--f-serif',display:'swap'});
 const sans=DM_Sans({subsets:['latin'],variable:'--f-sans',display:'swap'});
 const serifKn=Noto_Serif_Kannada({subsets:['kannada'],variable:'--f-serif-kn',display:'swap'});
