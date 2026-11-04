@@ -46,6 +46,7 @@ async function test(legacy){
  await db.exec(await read('admin-insert-examples.sql'));await db.exec(await read('admin-insert-examples.sql'));
  assert.equal((await db.query("select * from public.banners where slug='example-banner' and not is_published")).rows.length,1);
  await db.exec(await read('replace-leadership-banner.sql'));assert.equal((await db.query('select * from public.banners')).rows.length,1);
+ await db.exec(await read('add-four-banners.sql'));await db.exec(await read('add-four-banners.sql'));assert.equal((await db.query('select * from public.banners')).rows.length,5);
  await db.close();console.log(`PASS: ${legacy?'existing STAR1 schema':'fresh project'} — repeatable migration, drafts hidden, public writes denied, spoofed role denied, admin CRUD, restricted Storage paths.`);
 }
 await test(false);await test(true);
