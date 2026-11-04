@@ -47,6 +47,12 @@ async function test(legacy){
  assert.equal((await db.query("select * from public.banners where slug='example-banner' and not is_published")).rows.length,1);
  await db.exec(await read('replace-leadership-banner.sql'));assert.equal((await db.query('select * from public.banners')).rows.length,1);
  await db.exec(await read('add-four-banners.sql'));await db.exec(await read('add-four-banners.sql'));assert.equal((await db.query('select * from public.banners')).rows.length,5);
+ await db.exec(await read('add-original-gallery-and-events.sql'));await db.exec(await read('add-original-gallery-and-events.sql'));
+ assert.equal((await db.query("select * from public.gallery where image_url like '/media/gallery/%' and is_published")).rows.length,10);
+ assert.equal((await db.query("select * from public.events where image_url like '/media/events/%' and is_published and status='upcoming' and starts_at is null")).rows.length,6);
+ await db.exec("update public.events set starts_at='2027-01-20 18:00:00+05:30',venue_en='Confirmed venue' where slug='star1-voice-of-youth'");await db.exec(await read('add-original-gallery-and-events.sql'));
+ assert.equal((await db.query("select venue_en from public.events where slug='star1-voice-of-youth'")).rows[0].venue_en,'Confirmed venue');
+ assert((await db.query("select starts_at from public.events where slug='star1-voice-of-youth'")).rows[0].starts_at);
  await db.close();console.log(`PASS: ${legacy?'existing STAR1 schema':'fresh project'} — repeatable migration, drafts hidden, public writes denied, spoofed role denied, admin CRUD, restricted Storage paths.`);
 }
 await test(false);await test(true);

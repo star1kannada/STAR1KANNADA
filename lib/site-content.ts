@@ -29,3 +29,13 @@ export const hemaRoles=[
 ['Producer — television serials, theatre and cinema','ನಿರ್ಮಾಪಕರು- ಧಾರಾವಾಹಿ, ರಂಗ-ಚಲನಚಿತ್ರ'],
 ['Social service','ಸಾಮಾಜಿಕ ಸೇವೆ']
 ];
+
+/** Main menu used by every page header (home and inner pages). */
+export const navLinks=[
+['/','Home','ಮುಖಪುಟ'],
+['/events/','Upcoming events','ಮುಂಬರುವ ಕಾರ್ಯಕ್ರಮಗಳು'],
+['/gallery/','Gallery','ಚಿತ್ರಸಂಪುಟ'],
+['/partners/','Partners','ಸಹಭಾಗಿಗಳು'],
+['/founders/','Our founder','ನಮ್ಮ ಸಂಸ್ಥಾಪಕರು'],
+['/contact/','Contact us','ಸಂಪರ್ಕಿಸಿ']
+];
