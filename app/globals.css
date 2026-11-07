@@ -485,3 +485,6 @@ html[lang=kn] .lb-name{text-transform:none;line-height:1.25}
 @keyframes site-loading-spin{to{transform:rotate(360deg)}}
 @media(max-width:600px){.hero .hero-content{padding-bottom:45px}.hero-loading{min-height:600px}}
 @media(prefers-reduced-motion:reduce){.site-loader-ring{animation:none}}
+
+.social-brand-icon{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex:0 0 32px;border-radius:8px;background:#fff;padding:6px;vertical-align:middle}.social-brand-icon img{display:block;width:20px;height:20px;object-fit:contain}.social-brand-facebook img{width:12px}.social-brand-treefe{padding:3px}.social-brand-treefe img{width:26px;height:26px}
+.social-brand-treefe{width:56px;flex-basis:56px;padding:5px}.social-brand-treefe img{width:46px;height:22px}
